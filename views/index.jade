@@ -1,0 +1,48 @@
+extends layout
+
+block content
+	div(ng-app="boredomApp", ng-controller="boredomMessagesCtrl", ng-init="init()")
+		.row
+			.large-8.columns
+				h3 Messages
+				.overflowable#messages
+					div(ng-repeat='message in messages') 
+						div(ng-switch, on="message.user")
+							div(ng-switch-when="Info")
+								.alert-box(data-alert)
+									p
+										strong
+											{{message.user}} : 
+										{{message.text}}
+							div(ng-switch-when="Erreur")
+								.alert-box.alert
+									p
+										strong
+											{{message.user}} : 
+										{{message.text}}
+							div(ng-switch-default)
+								p
+									strong
+										{{message.user}} : 
+									{{message.text}}
+
+			.large-4.columns
+				h3 Utilisateurs
+				.overflowable#users
+					div(ng-repeat='user in users')
+						p(ng-class="{bold: user == name}") {{ user }}
+		br
+		.row
+			.large-8.columns
+				form(ng-submit='sendMessage()').row.collapse
+					.small-9.columns
+						input(type="text", ng-model='message', placeholder="Nouveau message")
+					.small-3.columns
+						input(type='submit', value='Envoyer').button.prefix
+
+			.large-4.columns
+				form(ng-submit='changeName()').row.collapse
+					.small-9.columns
+						input(type="text", ng-model='newName', placeholder="Nouveau pseudo")
+					.small-3.columns
+						input(type='submit', value='Changer').button.prefix
