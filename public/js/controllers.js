@@ -49,6 +49,32 @@ angular.module('boredomApp.controllers', []).
 		// ===============
 
 		var displayMessage = function(obj) {
+			// The array of regex patterns to look for
+			var format_search =  [
+			    /\[b\](.*?)\[\/b\]/ig,
+			    /\[i\](.*?)\[\/i\]/ig,
+			    /\[u\](.*?)\[\/u\]/ig,
+			    /\[img\](.*?)\[\/img\]/ig
+			]; // note: NO comma after the last entry
+			
+			// The matching array of strings to replace matches with
+			var format_replace = [
+			    '<strong>$1</strong>',
+			    '<em>$1</em>',
+			    '<span style="text-decoration: underline;">$1</span>',
+			    '<img src="$1"></img>'
+			];
+			
+			// Perform the actual conversion
+			for (var i =0;i<format_search.length;i++) {
+			  obj.text = obj.text.replace(format_search[i], format_replace[i]);
+			}
+			
+			if(obj.text.slice(0, 3) == "/me") {
+				obj.text = obj.user + obj.text.slice(3);
+				obj.user = "Info";
+			}
+			
 			if($scope.messages.length > 99)
 				$scope.messages = $scope.messages.slice(1);
 			$scope.messages.push(obj);

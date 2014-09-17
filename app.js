@@ -14,6 +14,7 @@ var app = express();
 
 app.configure(function(){
 	app.set('port', process.env.PORT || 3000);
+	app.set('host', process.env.IP || "localhost");
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 
@@ -49,7 +50,7 @@ app.get('*.less', function(req,res){
 }); 
 
 var server = http.createServer(app);
-server.listen(app.get('port'), function(){
+server.listen(app.get('port'), app.get('host'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 

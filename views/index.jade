@@ -10,21 +10,23 @@ block content
 						div(ng-switch, on="message.user")
 							div(ng-switch-when="Info")
 								.alert-box(data-alert)
-									p
-										strong
-											{{message.user}} : 
-										{{message.text}}
-							div(ng-switch-when="Erreur")
-								.alert-box.alert
-									p
-										strong
-											{{message.user}} : 
-										{{message.text}}
-							div(ng-switch-default)
-								p
 									strong
 										{{message.user}} : 
-									{{message.text}}
+									span(ng-bind-html-unsafe="message.text")
+							div(ng-switch-when="Erreur")
+								.alert-box.alert
+									strong
+										{{message.user}} : 
+									span(ng-bind-html-unsafe="message.text")
+							div(ng-switch-when="Attention")
+								.alert-box.success
+									strong
+										{{message.user}} : 
+									span(ng-bind-html-unsafe="message.text")
+							div(ng-switch-default)
+								strong
+									{{message.user}} : 
+								span(ng-bind-html-unsafe="message.text")
 
 			.large-4.columns
 				h3 Utilisateurs
